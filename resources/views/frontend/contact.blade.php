@@ -33,24 +33,30 @@
       </div>
 
       <div class="col-lg-6" data-aos="fade-left">
-        <form class="contact-form glass-panel" id="contactForm" novalidate>
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+        <form method="POST" action="{{ route('admin.contacts.send') }}" class="contact-form glass-panel" id="contactForm" novalidate>
+          @csrf
           <h3 class="mb-4">Send us a message</h3>
           <div class="row g-3">
             <div class="col-md-6">
               <label for="cName" class="form-label">Name</label>
-              <input type="text" class="form-control sora-input" id="cName" placeholder="Your name" required>
+              <input type="text" class="form-control sora-input" name="name" placeholder="Your name" required>
             </div>
             <div class="col-md-6">
               <label for="cEmail" class="form-label">Email</label>
-              <input type="email" class="form-control sora-input" id="cEmail" placeholder="you@email.com" required>
+              <input type="email" class="form-control sora-input" name="email" placeholder="you@email.com" required>
             </div>
             <div class="col-12">
               <label for="cSubject" class="form-label">Subject</label>
-              <input type="text" class="form-control sora-input" id="cSubject" placeholder="Private events, feedback, press…">
+              <input type="text" class="form-control sora-input" name="subject" placeholder="Private events, feedback, press…">
             </div>
             <div class="col-12">
               <label for="cMessage" class="form-label">Message</label>
-              <textarea class="form-control sora-input" id="cMessage" rows="4" placeholder="Tell us a little more…" required></textarea>
+              <textarea class="form-control sora-input" name="message" rows="4" placeholder="Tell us a little more…" required></textarea>
             </div>
             <div class="col-12">
               <button type="submit" class="btn btn-sora-outline w-100 magnetic-btn">
