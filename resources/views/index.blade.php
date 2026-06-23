@@ -13,7 +13,6 @@
     @include('frontend.reservation')
     @include('frontend.events')
     @include('frontend.contact')
-
 </main>
 
 @include('layouts.footer')

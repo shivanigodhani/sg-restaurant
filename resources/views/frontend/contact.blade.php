@@ -38,7 +38,12 @@
             {{ session('success') }}
         </div>
         @endif
-        <form method="POST" action="{{ route('admin.contacts.send') }}" class="contact-form glass-panel" id="contactForm" novalidate>
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
+        <form method="POST" action="{{ route('admin.contacts.send') }}" class="contact-form glass-panel">
           @csrf
           <h3 class="mb-4">Send us a message</h3>
           <div class="row g-3">

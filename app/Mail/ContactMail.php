@@ -30,13 +30,8 @@ class ContactMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Contact Mail',
+            subject: $this->data['subject'] ?? 'New Contact Message',
         );
-    }
-    public function build()
-    {
-        return $this->subject($this->data['subject'])
-                    ->view('frontend.contact');
     }
 
     /**
@@ -45,7 +40,7 @@ class ContactMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'email.contact',
         );
     }
 

@@ -14,17 +14,32 @@ class ContactsController extends Controller
     }
     public function contactsSend(Request $request)
     {
+        // dd($request->all());
         $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'message' => 'required',
+            'name'=>'required',
+            'email'=>'required|email',
+            'subject'=>'required',
+            'message'=>'required',
         ]);
 
-        $data = $request->all();
+        $data = $request->only([
+            'name',
+            'email',
+            'subject',
+            'message'
+        ]);
 
-        Mail::to('hello@sora-dining.com')
-            ->send(new ContactMail($data));
+        try {
 
-        return back()->with('success', 'Message sent successfully.');
+            Mail::to('shivanigodhani7210@gmail.com')
+                ->send(new ContactMail($data));
+
+            return back()->with('success','Message sent successfully.');
+
+        } catch (\Exception $e) {
+
+            return back()->with('error',$e->getMessage());
+
+        }
     }
 }
