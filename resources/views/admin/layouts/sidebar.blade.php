@@ -10,7 +10,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="index.html">
+              <a class="nav-link" href="{{ route('admin.reservation') }}">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Reservation</span>
               </a>
@@ -34,7 +34,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="index.html">
+              <a class="nav-link" href="{{ route('admin.events') }}">
                 <i class="mdi mdi-grid-large menu-icon"></i>
                 <span class="menu-title">Events</span>
               </a>

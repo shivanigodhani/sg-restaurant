@@ -12,43 +12,31 @@
                       <table class="table table-hover">
                         <thead>
                           <tr>
-                            <th>UserName</th>
+                            <th>Name</th>
                             <th>Email</th>
                             <th>Subject</th>
-                            <th>Message</th>
+                            <th>is_read</th>
                           </tr>
                         </thead>
                         <tbody>
+                          @forelse($contacts as $contact)
                           <tr>
-                            <td>Jacob</td>
-                            <td>Photoshop</td>
-                            <td class="text-danger"> 28.76% <i class="ti-arrow-down"></i></td>
-                            <td><label class="badge badge-danger">Pending</label></td>
+                              <td>{{ $contact->name }}</td>
+                              <td>{{ $contact->email }}</td>
+                              <td>{{ $contact->subject }}</td>
+                              <td>
+                                  @if($contact->is_read)
+                                      <span class="badge badge-success">Read</span>
+                                  @else
+                                      <span class="badge badge-warning">Unread</span>
+                                  @endif
+                              </td>
                           </tr>
+                          @empty
                           <tr>
-                            <td>Messsy</td>
-                            <td>Flash</td>
-                            <td class="text-danger"> 21.06% <i class="ti-arrow-down"></i></td>
-                            <td><label class="badge badge-warning">In progress</label></td>
+                              <td colspan="4" class="text-center">No inquiries found.</td>
                           </tr>
-                          <tr>
-                            <td>John</td>
-                            <td>Premier</td>
-                            <td class="text-danger"> 35.00% <i class="ti-arrow-down"></i></td>
-                            <td><label class="badge badge-info">Fixed</label></td>
-                          </tr>
-                          <tr>
-                            <td>Peter</td>
-                            <td>After effects</td>
-                            <td class="text-success"> 82.00% <i class="ti-arrow-up"></i></td>
-                            <td><label class="badge badge-success">Completed</label></td>
-                          </tr>
-                          <tr>
-                            <td>Dave</td>
-                            <td>53275535</td>
-                            <td class="text-success"> 98.05% <i class="ti-arrow-up"></i></td>
-                            <td><label class="badge badge-warning">In progress</label></td>
-                          </tr>
+                          @endforelse
                         </tbody>
                       </table>
                     </div>

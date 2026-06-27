@@ -20,50 +20,62 @@
       </div>
 
       <div class="col-lg-7" data-aos="fade-left">
-        <form class="reservation-form glass-panel" id="reservationForm" novalidate>
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+        @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+        @endif
+        <div id="reservationMessage"></div>
+        <form class="reservation-form glass-panel" id="reservationForm" action="{{ route('admin.reservation.store') }}" method="POST">
+          @csrf
           <div class="row g-3">
             <div class="col-md-6">
               <label for="resName" class="form-label">Full Name</label>
-              <input type="text" class="form-control sora-input" id="resName" placeholder="Your name" required>
+              <input type="text" class="form-control sora-input" name="full_name" placeholder="Your name" required>
             </div>
             <div class="col-md-6">
               <label for="resPhone" class="form-label">Phone Number</label>
-              <input type="tel" class="form-control sora-input" id="resPhone" placeholder="+91 00000 00000" required>
+              <input type="tel" class="form-control sora-input" name="phone" placeholder="+91 00000 00000" required>
             </div>
             <div class="col-md-6">
               <label for="resDate" class="form-label">Date</label>
-              <input type="date" class="form-control sora-input" id="resDate" required>
+              <input type="date" class="form-control sora-input" name="reservation_date" required>
             </div>
             <div class="col-md-6">
               <label for="resTime" class="form-label">Time</label>
-              <input type="time" class="form-control sora-input" id="resTime" required>
+              <input type="time" class="form-control sora-input" name="reservation_time" required>
             </div>
             <div class="col-md-6">
               <label for="resGuests" class="form-label">Guests</label>
-              <select class="form-select sora-input" id="resGuests" required>
+              <select class="form-select sora-input" name="guests" required>
                 <option value="" disabled selected>Select guests</option>
-                <option>1 Guest</option>
-                <option>2 Guests</option>
-                <option>3 Guests</option>
-                <option>4 Guests</option>
-                <option>5 Guests</option>
-                <option>6 Guests</option>
-                <option>7+ Guests (call us)</option>
+                <option value="1">1 Guest</option>
+                <option value="2">2 Guests</option>
+                <option value="3">3 Guests</option>
+                <option value="4">4 Guests</option>
+                <option value="5">5 Guests</option>
+                <option value="6">6 Guests</option>
+                <option value="7">7+ Guests(call us)</option>
               </select>
             </div>
             <div class="col-md-6">
               <label for="resOccasion" class="form-label">Occasion (optional)</label>
-              <select class="form-select sora-input" id="resOccasion">
+              <select class="form-select sora-input" name="occasion">
                 <option value="" selected>None</option>
-                <option>Birthday</option>
-                <option>Anniversary</option>
-                <option>Business Dinner</option>
-                <option>Date Night</option>
+                <option value="Birthday">Birthday</option>
+                <option value="Anniversary">Anniversary</option>
+                <option value="Business Dinner">Business Dinner</option>
+                <option value="Date Night">Date Night</option>
               </select>
             </div>
             <div class="col-12">
               <label for="resNote" class="form-label">Special Request</label>
-              <textarea class="form-control sora-input" id="resNote" rows="3" placeholder="Allergies, seating preference, celebration details…"></textarea>
+              <textarea class="form-control sora-input" name="special_request" rows="3" placeholder="Allergies, seating preference, celebration details…"></textarea>
             </div>
             <div class="col-12">
               <button type="submit" class="btn btn-sora-primary w-100 magnetic-btn" id="resSubmitBtn">
@@ -71,12 +83,92 @@
               </button>
             </div>
           </div>
-          <div class="form-success" id="formSuccess">
+          {{-- <div class="form-success" id="formSuccess">
             <i class="fa-solid fa-circle-check"></i>
             <p>Reservation request sent — we'll confirm by phone shortly.</p>
-          </div>
+          </div> --}}
         </form>
       </div>
     </div>
   </div>
 </section>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script>
+$(document).ready(function () {
+
+    $("#reservationForm").submit(function (e) {
+
+        e.preventDefault();
+
+        let form = $(this);
+
+        let button = $("#resSubmitBtn");
+
+        button.prop("disabled", true);
+        $("#resSubmitText").html(
+            '<span class="spinner-border spinner-border-sm"></span> Booking...'
+        );
+
+        $(".text-danger").remove();
+
+        $.ajax({
+
+            url: form.attr("action"),
+            type: "POST",
+            data: form.serialize(),
+
+            success: function (response) {
+
+                $("#reservationMessage").html(
+                    `<div class="alert alert-success">${response.message}</div>`
+                );
+
+                form.trigger("reset");
+
+            },
+
+            error: function (xhr) {
+
+                if (xhr.status === 422) {
+
+                    let errors = xhr.responseJSON.errors;
+
+                    $.each(errors, function (key, value) {
+
+                        $("[name='" + key + "']")
+                            .after(
+                                '<small class="text-danger d-block mt-1">' +
+                                value[0] +
+                                "</small>"
+                            );
+
+                    });
+
+                } else {
+
+                    $("#reservationMessage").html(
+                        `<div class="alert alert-danger">
+                            Something went wrong. Please try again.
+                        </div>`
+                    );
+
+                }
+
+            },
+
+            complete: function () {
+
+                button.prop("disabled", false);
+
+                $("#resSubmitText").html(
+                    'Confirm Reservation <i class="fa-solid fa-arrow-right-long"></i>'
+                );
+
+            }
+
+        });
+
+    });
+
+});
+</script>
