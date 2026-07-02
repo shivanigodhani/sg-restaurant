@@ -89,53 +89,41 @@
             </div>
 
             <div class="modal-body">
-
                 <table class="table table-bordered">
-
                     <tr>
                         <th>Name</th>
                         <td id="v_name"></td>
                     </tr>
-
                     <tr>
                         <th>Email</th>
                         <td id="v_email"></td>
                     </tr>
-
                     <tr>
                         <th>Phone</th>
                         <td id="v_phone"></td>
                     </tr>
-
                     <tr>
                         <th>Date</th>
                         <td id="v_date"></td>
                     </tr>
-
                     <tr>
                         <th>Time</th>
                         <td id="v_time"></td>
                     </tr>
-
                     <tr>
                         <th>Guests</th>
                         <td id="v_guests"></td>
                     </tr>
-
                     <tr>
                         <th>Occasion</th>
                         <td id="v_occasion"></td>
                     </tr>
-
                     <tr>
                         <th>Message</th>
                         <td id="v_message"></td>
                     </tr>
-
                 </table>
-
             </div>
-
         </div>
     </div>
 </div>
