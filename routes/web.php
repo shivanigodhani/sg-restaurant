@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\ChefController;
 use App\Http\Controllers\Admin\ContactsController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\EventsController;
@@ -28,6 +29,12 @@ Route::get('/admin/reservation/{id}/edit', [ReservationController::class, 'edit'
 Route::post('admin/reservations/update/{id}',[ReservationController::class,'update'])->name('admin.reservation.update');
 Route::delete('/admin/reservation/{id}', [ReservationController::class, 'delete'])->name('admin.events.delete');
 Route::get('/admin/reservations/{id}', [ReservationController::class, 'show'])->name('admin.reservation.show');
+
+Route::get('admin/chefs', [ChefController::class, 'index'])->name('admin.chefs');
+Route::post('admin/chefs/store', [ChefController::class, 'store'])->name('admin.chef.store');
+Route::get('/admin/chefs/{id}/edit', [ChefController::class, 'edit'])->name('admin.chef.edit');
+Route::post('admin/chefs/{id}',[ChefController::class,'update'])->name('admin.chef.update');
+Route::delete('/admin/chefs/{id}', [ChefController::class, 'delete'])->name('admin.chef.delete');
 
 Route::get('/events/{slug}', [EventsController::class, 'show'])->name('events.show');
 
